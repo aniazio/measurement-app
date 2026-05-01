@@ -42,7 +42,7 @@ public class MonthSummaryProcessor {
 
     @Scheduled(cron = "0 0 2 L * *")
     public void produceMonthSummaryReport() {
-        List<Stats> lastMonthTop10NoUsage = statsRepository.getLastMonthTop10NoUsage();
+        List<Stats> lastMonthTop10NoUsage = statsRepository.getLastMonthTop10NOUsage();
         List<ReportRow> reportRows = lastMonthTop10NoUsage.stream()
                 .map(stats -> Map.entry(stats.getCityId(), stats.getAverage()))
                 .map(entry -> {

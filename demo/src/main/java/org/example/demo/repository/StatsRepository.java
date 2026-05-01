@@ -10,5 +10,5 @@ public interface StatsRepository {
 
     FullStats get3hStats(UUID cityId);
 
-    List<Stats> getLastMonthTop10NoUsage();
+    List<Stats> getLastMonthTop10NOUsage();
 }
