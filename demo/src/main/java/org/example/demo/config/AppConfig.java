@@ -1,6 +1,6 @@
 package org.example.demo.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -11,10 +11,10 @@ import reactor.netty.http.client.HttpClient;
 import java.time.Duration;
 
 @Configuration
-@ConfigurationProperties("external.api")
 @EnableJpaRepositories
 public class AppConfig {
 
+    @Value("${external.api.region.url:'localhost:8080'}")
     private String url;
 
     @Bean
