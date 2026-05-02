@@ -32,6 +32,6 @@ public class MeasurementServiceImpl implements MeasurementService {
         if (!regionService.isValidRegion(regionId, cityId)) {
             throw new InvalidRegionException(regionId, cityId);
         }
-        return StatsConverter.convertToFullStats3h(statsRepository.get3hStats(cityId));
+        return statsRepository.get3hStats(cityId);
     }
 }

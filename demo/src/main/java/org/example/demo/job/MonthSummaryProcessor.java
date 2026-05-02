@@ -3,9 +3,9 @@ package org.example.demo.job;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.demo.entity.Stats;
 import org.example.demo.exception.StatsMonthlyReportGenerationException;
 import org.example.demo.model.RegionDto;
+import org.example.demo.model.Stats;
 import org.example.demo.repository.StatsRepository;
 import org.example.demo.service.RegionService;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +17,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +44,10 @@ public class MonthSummaryProcessor {
 
     @Scheduled(cron = "0 0 2 L * *")
     public void produceMonthSummaryReport() {
-        List<Stats> lastMonthTop10NoUsage = statsRepository.getLastMonthTop10NOUsage();
+        LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1); //TODO clarify
+        Instant firstDayOfLastMonth = LocalDateTime.of(lastMonth.getYear(), lastMonth.getMonth(), 1, 0, 0)
+                .toInstant(ZoneOffset.UTC);
+        List<Stats> lastMonthTop10NoUsage = statsRepository.getLastMonthTop10NOUsage(firstDayOfLastMonth);
         List<ReportRow> reportRows = lastMonthTop10NoUsage.stream()
                 .map(stats -> Map.entry(stats.getCityId(), stats.getAverage()))
                 .map(entry -> {

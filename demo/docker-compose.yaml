@@ -1,0 +1,16 @@
+services:
+  postgres-db:
+    image: postgres:16.2
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=measurement-app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pwd
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
+    driver: local
