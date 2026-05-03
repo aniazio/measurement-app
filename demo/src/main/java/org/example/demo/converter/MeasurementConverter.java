@@ -1,23 +1,16 @@
 package org.example.demo.converter;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import org.example.demo.entity.Measurement;
 import org.example.demo.model.MeasurementDto;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Component
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class MeasurementConverter {
+@Mapper
+public interface MeasurementConverter {
 
-    public static Measurement convertToMeasurement(MeasurementDto measurementDto) {
-        return Measurement.builder()
-                .co(measurementDto.getCo())
-                .no2(measurementDto.getNo2())
-                .pm10(measurementDto.getPm10())
-                .timestamp(measurementDto.getTimestamp())
-                .cityId(measurementDto.getCityId())
-                .sensorId(measurementDto.getSensorId())
-                .build();
-    }
+    MeasurementConverter INSTANCE = Mappers.getMapper(MeasurementConverter.class);
+
+    @Mapping(source = "timestamp", target = "measurementTimestamp")
+    Measurement convertToMeasurement(MeasurementDto measurementDto);
 }

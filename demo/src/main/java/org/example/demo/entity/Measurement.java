@@ -34,21 +34,21 @@ public class Measurement {
     private BigDecimal no2;
     @Id
     @Column(name = "MEASUREMENT_TIMESTAMP", nullable = false)
-    private Instant timestamp;
+    private Instant measurementTimestamp;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
         Measurement that = (Measurement) o;
-        return sensorId.equals(that.sensorId) && cityId.equals(that.cityId) && timestamp.equals(that.timestamp);
+        return sensorId.equals(that.sensorId) && cityId.equals(that.cityId) && measurementTimestamp.equals(that.measurementTimestamp);
     }
 
     @Override
     public int hashCode() {
         int result = sensorId.hashCode();
         result = 31 * result + cityId.hashCode();
-        result = 31 * result + timestamp.hashCode();
+        result = 31 * result + measurementTimestamp.hashCode();
         return result;
     }
 }

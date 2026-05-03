@@ -23,7 +23,7 @@ public class MeasurementServiceImpl implements MeasurementService {
 
     @Override
     public MeasurementDto save(MeasurementDto measurement) {
-        measurementRepository.save(MeasurementConverter.convertToMeasurement(measurement));
+        measurementRepository.save(MeasurementConverter.INSTANCE.convertToMeasurement(measurement));
         return measurement;
     }
 
