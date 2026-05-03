@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: measurement-app
+  datasource:
+    url: jdbc:postgresql://localhost:5432/measurement-app
+    username: postgres
+    password: pwd
+  jpa:
+    hibernate:
+      ddl-auto: validate
+external-api:
+  region:
+    url:

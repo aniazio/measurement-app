@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class StatsConverter {
+public class MeasurementConverter {
 
     public static Measurement convertToMeasurement(MeasurementDto measurementDto) {
         return Measurement.builder()

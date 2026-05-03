@@ -1,5 +1,6 @@
 package org.example.demo.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -23,13 +24,16 @@ import java.util.UUID;
 public class Measurement {
 
     @Id
+    @Column(name = "SENSOR_ID", nullable = false)
     private UUID sensorId;
     @Id
+    @Column(name = "CITY_ID", nullable = false)
     private UUID cityId;
     private BigDecimal pm10;
     private BigDecimal co;
     private BigDecimal no2;
     @Id
+    @Column(name = "MEASUREMENT_TIMESTAMP", nullable = false)
     private Instant timestamp;
 
     @Override

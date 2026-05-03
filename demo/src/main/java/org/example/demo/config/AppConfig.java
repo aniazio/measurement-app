@@ -14,7 +14,7 @@ import java.time.Duration;
 @EnableJpaRepositories
 public class AppConfig {
 
-    @Value("${external.api.region.url:'localhost:8080'}")
+    @Value("${external-api.region.url:'localhost:8080'}")
     private String url;
 
     @Bean

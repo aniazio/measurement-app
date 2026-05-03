@@ -26,10 +26,10 @@ databaseChangeLog:
                   name: no2
                   type: DECIMAL(12, 2)
               - column:
-                name: timestamp
-                type: TIMESTAMP WITH TIME ZONE
-                constraints:
-                  nullable: false
+                  name: measurement_timestamp
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
         - addPrimaryKey:
             tableName: measurement
             columnNames: cityId, timestamp, sensorId

@@ -1,7 +1,7 @@
 package org.example.demo.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.demo.converter.StatsConverter;
+import org.example.demo.converter.MeasurementConverter;
 import org.example.demo.exception.InvalidRegionException;
 import org.example.demo.model.FullStats3h;
 import org.example.demo.model.MeasurementDto;
@@ -23,7 +23,7 @@ public class MeasurementServiceImpl implements MeasurementService {
 
     @Override
     public MeasurementDto save(MeasurementDto measurement) {
-        measurementRepository.save(StatsConverter.convertToMeasurement(measurement));
+        measurementRepository.save(MeasurementConverter.convertToMeasurement(measurement));
         return measurement;
     }
 

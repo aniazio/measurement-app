@@ -3,6 +3,7 @@ package org.example.demo.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.demo.model.RegionDto;
 import org.example.demo.service.RegionService;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Primary
 public class RegionServiceImpl implements RegionService {
 
     private final WebClient webClient;

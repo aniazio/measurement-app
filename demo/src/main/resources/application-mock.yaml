@@ -1,0 +1,3 @@
+external-api:
+  region:
+    url: localhost:8080
