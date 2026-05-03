@@ -5,5 +5,4 @@ import org.example.demo.entity.MeasurementId;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MeasurementRepository extends CrudRepository<Measurement, MeasurementId> {
-
 }

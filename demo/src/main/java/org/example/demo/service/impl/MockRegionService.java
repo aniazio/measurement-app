@@ -2,13 +2,15 @@ package org.example.demo.service.impl;
 
 import org.example.demo.model.RegionDto;
 import org.example.demo.service.RegionService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
-@Profile("local")
+@Profile({"local", "test"})
+@Qualifier("mock")
 public class MockRegionService implements RegionService {
 
     @Override

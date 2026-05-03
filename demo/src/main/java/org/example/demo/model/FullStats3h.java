@@ -1,6 +1,7 @@
 package org.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.math.RoundingMode;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class FullStats3h {
 
     @JsonProperty("avgNO2Last3Hour")

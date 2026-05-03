@@ -7,7 +7,8 @@ spring:
     password: pwd
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
+
 external-api:
   region:
     url:

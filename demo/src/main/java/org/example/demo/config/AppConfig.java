@@ -11,7 +11,7 @@ import reactor.netty.http.client.HttpClient;
 import java.time.Duration;
 
 @Configuration
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = "org.example.demo.repository")
 public class AppConfig {
 
     @Value("${external-api.region.url:'localhost:8080'}")
