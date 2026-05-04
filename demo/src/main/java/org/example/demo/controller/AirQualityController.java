@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.demo.model.FullStats3h;
 import org.example.demo.model.MeasurementDto;
 import org.example.demo.service.MeasurementService;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +28,7 @@ public class AirQualityController {
     @ApiResponse(responseCode = "400", description = "Bad Request")
     @PostMapping("/measurement")
     ResponseEntity<MeasurementDto> createNewMeasurementRecord(@RequestBody @Valid MeasurementDto measurement) {
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(measurementService.save(measurement));
+        return ResponseEntity.status(HttpStatus.CREATED).body(measurementService.save(measurement));
     }
 
     @Operation(summary = "Get 3h stats", description = "Get stats for particular city from last 3 hours")

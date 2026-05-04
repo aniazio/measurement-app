@@ -8,6 +8,7 @@ import org.example.demo.model.RegionDto;
 import org.example.demo.model.Stats;
 import org.example.demo.repository.StatsRepository;
 import org.example.demo.service.RegionService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -32,8 +34,10 @@ public class MonthSummaryProcessor {
     private final RegionService regionService;
 
     private static final String HEADER_ROW = "CITY,REGION,NO2";
-    private static final String DIRECTORY = "month_summary_report";
-    private static final String FILE_NAME_PATTERN = "month_summary_report_%s.csv";
+    @Value("${month-summary-generator.directory:month_summary_report}")
+    private String directory = "month_summary_report";
+    private static final String FILE_NAME_PATTERN = "WORST_CITIES_NO2_%s.csv";
+    private static final String DATE_FORMAT = "YYYYmm";
 
     private static String absoluteDirectory;
 
@@ -43,11 +47,13 @@ public class MonthSummaryProcessor {
     }
 
     @Scheduled(cron = "0 0 2 L * *")
-    public void produceMonthSummaryReport() {
-        LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1); //TODO clarify
-        Instant firstDayOfLastMonth = LocalDateTime.of(lastMonth.getYear(), lastMonth.getMonth(), 1, 0, 0)
+    public void produceMonthSummaryReport(Instant dayOfTheMonth) {
+        LocalDateTime dayInTheAnalyzedMonth = dayOfTheMonth == null
+                ? LocalDateTime.now().minus(Duration.ofDays(1))
+                : LocalDateTime.from(dayOfTheMonth);
+        Instant firstDayOfTheMonth = LocalDateTime.of(dayInTheAnalyzedMonth.getYear(), dayInTheAnalyzedMonth.getMonth(), 1, 0, 0)
                 .toInstant(ZoneOffset.UTC);
-        List<Stats> lastMonthTop10NoUsage = statsRepository.getLastMonthTop10NOUsage(firstDayOfLastMonth);
+        List<Stats> lastMonthTop10NoUsage = statsRepository.getLastMonthTop10NOUsage(firstDayOfTheMonth);
         List<ReportRow> reportRows = lastMonthTop10NoUsage.stream()
                 .map(stats -> Map.entry(stats.getCityId(), stats.getAverage()))
                 .map(entry -> {
@@ -55,21 +61,21 @@ public class MonthSummaryProcessor {
                     return new ReportRow(region.getCity(), region.getRegion(), entry.getValue());
                 })
                 .toList();
-        String fileName = String.format(FILE_NAME_PATTERN, DateTimeFormatter.ofPattern("yyyy-MM").format(Instant.now()));
+        String fileName = String.format(FILE_NAME_PATTERN, DateTimeFormatter.ofPattern(DATE_FORMAT).format(Instant.now()));
         generateReportFile(absoluteDirectory, fileName, reportRows);
     }
 
     private String generateDirectory() {
-        File directory = new File(MonthSummaryProcessor.DIRECTORY);
+        File fileDirectory = new File(directory);
 
-        directory.mkdirs();
+        fileDirectory.mkdirs();
 
         // Verify the directory exists after creation attempt
-        if (!directory.exists() || !directory.isDirectory()) {
-            log.error("Failed to create the directory: {}", directory.getAbsolutePath());
+        if (!fileDirectory.exists() || !fileDirectory.isDirectory()) {
+            log.error("Failed to create the directory: {}", fileDirectory.getAbsolutePath());
             throw new StatsMonthlyReportGenerationException();
         }
-        return directory.getAbsolutePath();
+        return fileDirectory.getAbsolutePath();
     }
 
     private void generateReportFile(String fileDirectory, String fileName, List<ReportRow> reportRows) {

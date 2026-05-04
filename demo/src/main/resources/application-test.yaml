@@ -4,4 +4,5 @@ external-api:
 spring:
   jpa:
     show-sql: true
-
+month-report-generator:
+  directory: month_summary_report_test

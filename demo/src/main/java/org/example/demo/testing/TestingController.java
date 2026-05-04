@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @RestController
@@ -37,8 +38,8 @@ public class TestingController {
     @Operation(summary = "Generate month summary report", description = "Generate month summary report - testing implementation to manually trigger month summary report generation")
     @ApiResponse(responseCode = "200", description = "Month summary report generation triggered")
     @GetMapping("/month-summary")
-    public ResponseEntity<String> isValidRegion() {
-        monthSummaryProcessor.produceMonthSummaryReport();
+    public ResponseEntity<String> generateMonthlySummary(Instant dayOfTheMonth) {
+        monthSummaryProcessor.produceMonthSummaryReport(dayOfTheMonth);
         return ResponseEntity.ok("Month summary report generation triggered");
     }
 }
