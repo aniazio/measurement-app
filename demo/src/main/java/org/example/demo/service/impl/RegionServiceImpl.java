@@ -1,6 +1,7 @@
 package org.example.demo.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.demo.model.RegionDto;
 import org.example.demo.service.RegionService;
 import org.springframework.context.annotation.Primary;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Primary
+@Slf4j
 public class RegionServiceImpl implements RegionService {
 
     private final WebClient webClient;
@@ -22,7 +24,7 @@ public class RegionServiceImpl implements RegionService {
     public boolean isValidRegion(UUID regionId, UUID cityId) {
         return Boolean.TRUE.equals(getRegionDtoFlux(cityId)
                 .map(regionDto -> regionDto.getRegionId().equals(regionId))
-                .onErrorResume(err -> Mono.just(false))
+                .doOnNext(regionDto -> log.info("RegionDto received from Region service: {}", regionDto))
                 .block());
     }
 

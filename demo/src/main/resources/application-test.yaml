@@ -1,3 +1,10 @@
 external-api:
   region:
-    url: localhost:8080
+    url: http://localhost:8080
+spring:
+  jpa:
+    show-sql: true
+logging:
+  level:
+    liquibase: DEBUG
+    org.springframework.boot.autoconfigure.liquibase: DEBUG

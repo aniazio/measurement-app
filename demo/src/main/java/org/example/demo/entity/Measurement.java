@@ -51,4 +51,8 @@ public class Measurement {
         result = 31 * result + measurementTimestamp.hashCode();
         return result;
     }
+
+    public MeasurementId getId() {
+        return new MeasurementId(sensorId, cityId, measurementTimestamp);
+    }
 }

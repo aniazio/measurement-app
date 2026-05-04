@@ -1,5 +1,7 @@
 package org.example.demo.testing;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.example.demo.job.MonthSummaryProcessor;
 import org.example.demo.model.RegionDto;
 import org.example.demo.service.RegionService;
@@ -25,11 +27,15 @@ public class TestingController {
         this.monthSummaryProcessor = monthSummaryProcessor;
     }
 
+    @Operation(summary = "Get region by city id", description = "Get region by city id - testing implementation, which returns the same region id as city id")
+    @ApiResponse(responseCode = "200", description = "Region found")
     @GetMapping("/cities/{cityId}")
     public ResponseEntity<RegionDto> getRegion(@PathVariable UUID cityId) {
         return ResponseEntity.ok(regionService.getRegion(cityId));
     }
 
+    @Operation(summary = "Generate month summary report", description = "Generate month summary report - testing implementation to manually trigger month summary report generation")
+    @ApiResponse(responseCode = "200", description = "Month summary report generation triggered")
     @GetMapping("/month-summary")
     public ResponseEntity<String> isValidRegion() {
         monthSummaryProcessor.produceMonthSummaryReport();

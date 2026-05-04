@@ -7,12 +7,12 @@ databaseChangeLog:
             tableName: measurement
             columns:
               - column:
-                  name: sensorId
+                  name: sensor_id
                   type: UUID
                   constraints:
                     nullable: false
               - column:
-                  name: cityId
+                  name: city_id
                   type: UUID
                   constraints:
                     nullable: false
@@ -32,6 +32,6 @@ databaseChangeLog:
                     nullable: false
         - addPrimaryKey:
             tableName: measurement
-            columnNames: cityId, timestamp, sensorId
+            columnNames: cityId, measurement_timestamp, sensorId
             constraintName: pk_measurement
 
