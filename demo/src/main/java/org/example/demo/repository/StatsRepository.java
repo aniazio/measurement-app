@@ -11,8 +11,17 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Repository for statistics.
+ */
 public interface StatsRepository extends Repository<Measurement, MeasurementId> {
 
+    /**
+     * Retrieves the last 3 hours of statistics for a city.
+     *
+     * @param cityId the ID of the city
+     * @return the last 3 hours of statistics for the city
+     */
     @Query("""
             SELECT new org.example.demo.model.FullStats3h(avg(m.no2), max(m.no2), min(m.no2), avg(m.co), max(m.co), min(m.co), avg(m.pm10), max(m.pm10), min(m.pm10))
                         FROM Measurement m
@@ -21,6 +30,12 @@ public interface StatsRepository extends Repository<Measurement, MeasurementId> 
             """)
     FullStats3h get3hStats(UUID cityId);
 
+    /**
+     * Retrieves statistics of 10 worst cities from the month.
+     *
+     * @param firstDayOfLastMonth the first day of the last month
+     * @return statistics of 10 worst cities from the month
+     */
     @Query("""
             SELECT new org.example.demo.model.Stats(m.cityId, avg(m.no2))
             FROM Measurement m

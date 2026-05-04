@@ -17,12 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+/**
+ * Controller for interacting with air quality measurements.
+ */
 @RestController("/api")
 @RequiredArgsConstructor
 public class AirQualityController {
 
     private final MeasurementService measurementService;
 
+    /**
+     * Creates a new measurement record.
+     *
+     * @param measurement the measurement record to create
+     * @return the created measurement record
+     */
     @Operation(summary = "Create new measurement record", description = "Create new measurement record")
     @ApiResponse(responseCode = "201", description = "Successfully created")
     @ApiResponse(responseCode = "400", description = "Bad Request")
@@ -31,6 +40,13 @@ public class AirQualityController {
         return ResponseEntity.status(HttpStatus.CREATED).body(measurementService.save(measurement));
     }
 
+    /**
+     * Get stats for particular city from last 3 hours.
+     *
+     * @param regionId id of region, in which city is located
+     * @param cityId   id of city
+     * @return stats for particular city from last 3 hours
+     */
     @Operation(summary = "Get 3h stats", description = "Get stats for particular city from last 3 hours")
     @ApiResponse(responseCode = "201", description = "Stats calculated")
     @ApiResponse(responseCode = "400", description = "Bad Request")

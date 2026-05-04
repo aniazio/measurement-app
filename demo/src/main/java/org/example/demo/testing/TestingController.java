@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Controller only for testing purposes.
+ */
 @RestController
 @Profile("test")
 public class TestingController {
@@ -28,6 +31,12 @@ public class TestingController {
         this.monthSummaryProcessor = monthSummaryProcessor;
     }
 
+    /**
+     * Gets region for a city. Used as a mock for external region service.
+     *
+     * @param cityId id of the city
+     * @return region dto
+     */
     @Operation(summary = "Get region by city id", description = "Get region by city id - testing implementation, which returns the same region id as city id")
     @ApiResponse(responseCode = "200", description = "Region found")
     @GetMapping("/cities/{cityId}")
@@ -35,7 +44,13 @@ public class TestingController {
         return ResponseEntity.ok(regionService.getRegion(cityId));
     }
 
-    @Operation(summary = "Generate month summary report", description = "Generate month summary report - testing implementation to manually trigger month summary report generation")
+    /**
+     * Generates summary report for the month. Used for manual trigger for month summary report generation, only for testing purposes.
+     *
+     * @param dayOfTheMonth day of the month for which the report should be generated
+     * @return message indicating that month summary report generation was triggered
+     */
+    @Operation(summary = "Generate summary report for the month", description = "Generate summary report for the month - testing implementation to manually trigger month summary report generation")
     @ApiResponse(responseCode = "200", description = "Month summary report generation triggered")
     @GetMapping("/month-summary")
     public ResponseEntity<String> generateMonthlySummary(Instant dayOfTheMonth) {

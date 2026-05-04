@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.util.UUID;
 
+/**
+ * Region data transfer object, used for communication with external region API.
+ */
 @Data
 @Builder
 @AllArgsConstructor

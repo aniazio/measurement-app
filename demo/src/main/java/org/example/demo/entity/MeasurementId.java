@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * MeasurementId class, for storing primary key of {@link Measurement}.
+ */
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor

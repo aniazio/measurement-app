@@ -25,6 +25,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Month summary processor. It generates monthly report with worst cities based on NO2 levels.
+ * Job runs on the first day of the month. It analyzes the last month's data and generates a report.
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -41,12 +45,28 @@ public class MonthSummaryProcessor {
 
     private static String absoluteDirectory;
 
+    /**
+     * Initializes the directory for report generation.
+     */
     @PostConstruct
     public void init() {
         absoluteDirectory = generateDirectory();
     }
 
-    @Scheduled(cron = "0 0 2 L * *")
+    /**
+     * Generates monthly report with worst cities based on NO2 levels.
+     * Job runs on the first day of the month. It analyzes the last month's data and generates a report.
+     */
+    @Scheduled(cron = "0 0 2 1 * *")
+    public void produceMonthSummaryReport() {
+        produceMonthSummaryReport(null);
+    }
+
+    /**
+     * Generates monthly report with worst cities based on NO2 levels.
+     *
+     * @param dayOfTheMonth the day of the month (optional parameter, in case when report should be triggered for other day)
+     */
     public void produceMonthSummaryReport(Instant dayOfTheMonth) {
         LocalDateTime dayInTheAnalyzedMonth = dayOfTheMonth == null
                 ? LocalDateTime.now().minus(Duration.ofDays(1))

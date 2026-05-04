@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.UUID;
 
+/**
+ * Simple statistics for a city.
+ */
 @Data
 @Builder
 @AllArgsConstructor

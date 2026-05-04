@@ -11,6 +11,9 @@ import reactor.netty.http.client.HttpClient;
 
 import java.time.Duration;
 
+/**
+ * General app configuration.
+ */
 @Configuration
 @EnableJpaRepositories(basePackages = "org.example.demo")
 @EnableCaching

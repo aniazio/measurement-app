@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+/**
+ * Main implementation of the MeasurementService interface.
+ */
 @Service
 @RequiredArgsConstructor
 public class MeasurementServiceImpl implements MeasurementService {

@@ -13,6 +13,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Measurement data transfer object, for creating measurements.
+ */
 @Data
 @Builder
 @AllArgsConstructor

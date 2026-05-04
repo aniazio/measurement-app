@@ -8,6 +8,9 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * Global exception handler.
+ */
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -15,6 +18,12 @@ public class GlobalExceptionHandler {
     protected static final String INVALID_REGION_OR_CITY_ID = "Invalid region or city id";
     protected static final String MEASUREMENT_ALREADY_RECORDED = "Measurement already recorded";
 
+    /**
+     * Handles {@link InvalidRegionException}.
+     *
+     * @param exception invalid region exception
+     * @return response for invalid region exception
+     */
     @ExceptionHandler(InvalidRegionException.class)
     public ProblemDetail handleInvalidRegionException(InvalidRegionException exception) {
         log.error("Handling " + exception.getClass());
@@ -24,6 +33,12 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST, INVALID_REGION_OR_CITY_ID);
     }
 
+    /**
+     * Handles {@link DuplicateKeyException}.
+     *
+     * @param exception duplicated key exception
+     * @return response for duplicated key exception
+     */
     @ExceptionHandler(DuplicateKeyException.class)
     public ProblemDetail handleDuplicateKeyException(DuplicateKeyException exception) {
         log.error("Handling " + exception.getClass());

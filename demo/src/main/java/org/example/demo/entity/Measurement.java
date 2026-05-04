@@ -14,6 +14,10 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Measurement entity, to store information about measurement in particular city.
+ * Measurement timestamp, sensor id and city id should be unique.
+ */
 @Data
 @Builder
 @NoArgsConstructor

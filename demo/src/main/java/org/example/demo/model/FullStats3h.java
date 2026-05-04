@@ -8,6 +8,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Full statistics for a 3-hour period.
+ */
 @Data
 @Builder
 @AllArgsConstructor

@@ -13,6 +13,9 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
+/**
+ * Main implementation of the RegionService interface.
+ */
 @Service
 @RequiredArgsConstructor
 @Primary

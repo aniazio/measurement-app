@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+/**
+ * Mock implementation of the RegionService interface.
+ */
 @Component
 @Profile({"local", "test"})
 @Qualifier("mock")
