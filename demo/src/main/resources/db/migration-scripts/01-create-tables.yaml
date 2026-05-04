@@ -32,6 +32,6 @@ databaseChangeLog:
                     nullable: false
         - addPrimaryKey:
             tableName: measurement
-            columnNames: cityId, measurement_timestamp, sensorId
+            columnNames: city_id, measurement_timestamp, sensor_id
             constraintName: pk_measurement
 

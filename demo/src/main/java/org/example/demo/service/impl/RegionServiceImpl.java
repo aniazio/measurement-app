@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.demo.model.RegionDto;
 import org.example.demo.service.RegionService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class RegionServiceImpl implements RegionService {
     private final WebClient webClient;
 
     @Override
+    @Cacheable(value = "region-city-matching", key = "#regionId + ' ' + #cityId")
     public boolean isValidRegion(UUID regionId, UUID cityId) {
         return Boolean.TRUE.equals(getRegionDtoFlux(cityId)
                 .map(regionDto -> regionDto.getRegionId().equals(regionId))

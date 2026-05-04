@@ -4,7 +4,4 @@ external-api:
 spring:
   jpa:
     show-sql: true
-logging:
-  level:
-    liquibase: DEBUG
-    org.springframework.boot.autoconfigure.liquibase: DEBUG
+

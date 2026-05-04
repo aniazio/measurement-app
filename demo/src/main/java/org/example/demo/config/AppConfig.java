@@ -1,6 +1,7 @@
 package org.example.demo.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -11,7 +12,8 @@ import reactor.netty.http.client.HttpClient;
 import java.time.Duration;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "org.example.demo.repository")
+@EnableJpaRepositories(basePackages = "org.example.demo")
+@EnableCaching
 public class AppConfig {
 
     @Value("${external-api.region.url:'localhost:8080'}")
