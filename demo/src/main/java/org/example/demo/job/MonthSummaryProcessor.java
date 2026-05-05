@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -37,11 +36,11 @@ public class MonthSummaryProcessor {
     private final StatsRepository statsRepository;
     private final RegionService regionService;
 
-    private static final String HEADER_ROW = "CITY,REGION,NO2";
-    @Value("${month-summary-generator.directory:month_summary_report}")
-    private String directory = "month_summary_report";
-    private static final String FILE_NAME_PATTERN = "WORST_CITIES_NO2_%s.csv";
-    private static final String DATE_FORMAT = "YYYYmm";
+    static final String HEADER_ROW = "CITY,REGION,NO2";
+    @Value("${month-summary-generator.directory:month_summary_reports}")
+    static String directory = "month_summary_reports";
+    static final String FILE_NAME_PATTERN = "WORST_CITIES_NO2_%s.csv";
+    static final String DATE_FORMAT = "YYYYMM";
 
     private static String absoluteDirectory;
 
@@ -72,7 +71,7 @@ public class MonthSummaryProcessor {
      */
     @Scheduled(cron = "0 0 2 1 * *")
     public void produceMonthSummaryReport() {
-        LocalDateTime dayOfTheMonth = LocalDateTime.now().minus(Duration.ofDays(1));
+        LocalDateTime dayOfTheMonth = LocalDateTime.now().minusMonths(1);
         produceMonthSummaryReport(dayOfTheMonth);
     }
 
@@ -92,7 +91,7 @@ public class MonthSummaryProcessor {
                     return new ReportRow(region.getCity(), region.getRegion(), entry.getValue());
                 })
                 .toList();
-        String fileName = String.format(FILE_NAME_PATTERN, DateTimeFormatter.ofPattern(DATE_FORMAT).format(Instant.now()));
+        String fileName = String.format(FILE_NAME_PATTERN, DateTimeFormatter.ofPattern(DATE_FORMAT).format(dayOfTheMonth));
         generateReportFile(absoluteDirectory, fileName, reportRows);
     }
 

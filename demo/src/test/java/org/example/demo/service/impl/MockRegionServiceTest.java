@@ -1,6 +1,7 @@
 package org.example.demo.service.impl;
 
 import org.example.demo.model.RegionDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -15,6 +16,7 @@ class MockRegionServiceTest {
     private final MockRegionService mockRegionService = new MockRegionService();
 
     @Test
+    @DisplayName("isValidRegionForTheCity when cityId equals regionId for the cityId expects true")
     void testIsValidRegionWhenCityIdEqualsRegionForTheCityIdExpectsTrue() {
         UUID regionId = UUID.randomUUID();
 
@@ -22,6 +24,7 @@ class MockRegionServiceTest {
     }
 
     @Test
+    @DisplayName("isValidRegionForTheCity when cityId does not equal regionId for the cityId expects false")
     void testIsValidRegionWhenCityIdDoesNotEqualRegionForTheCityIdExpectsFalse() {
         UUID regionId = UUID.randomUUID();
         UUID cityId = UUID.randomUUID();
@@ -30,6 +33,7 @@ class MockRegionServiceTest {
     }
 
     @Test
+    @DisplayName("getRegion when triggered expects region response constructed based on city id")
     void testGetRegionWhenTriggeredExpectsValidRegionResponse() {
         //given
         UUID cityId = UUID.randomUUID();

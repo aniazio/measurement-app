@@ -2,6 +2,7 @@ package org.example.demo.exception.handler;
 
 import org.example.demo.exception.ExternalDependencyException;
 import org.example.demo.exception.InvalidRegionException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ class GlobalExceptionHandlerTest {
     private final GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
 
     @Test
+    @DisplayName("handleInvalidRegionException when invoked expects generic problem detail without region and city id")
     void testHandleInvalidRegionExceptionWhenInvokedExpectGenericProblemDetail() {
         //given
         UUID regionId = UUID.randomUUID();
@@ -40,6 +42,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("handleDuplicateKeyException when invoked expects generic problem detail without sensitive information from the message")
     void testHandleDuplicateKeyExceptionWhenInvokedExpectGenericProblemDetail() {
         //given
         String message = "sensitive info";
@@ -53,6 +56,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("handleExternalDependencyException when invoked expects problem detail with message from exception")
     void testHandleExternalDependencyExceptionWhenInvokedExpectProblemDetail() {
         //given
         ExternalDependencyException externalDependencyException = new ExternalDependencyException();
@@ -64,6 +68,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("handleMethodArgumentNotValidException when invoked expects problem detail with message explaining validation errors")
     void testHandleMethodArgumentNotValidExceptionWhenInvokedExpectProblemDetail() {
         //given
         MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);

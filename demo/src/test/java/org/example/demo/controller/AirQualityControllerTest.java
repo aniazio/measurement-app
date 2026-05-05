@@ -3,6 +3,7 @@ package org.example.demo.controller;
 import org.example.demo.model.FullStats3h;
 import org.example.demo.model.MeasurementDto;
 import org.example.demo.service.MeasurementService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,6 +30,7 @@ class AirQualityControllerTest {
 
 
     @Test
+    @DisplayName("createNewMeasurementRecord when proper input expects measurement service invocation")
     void testCreateNewMeasurementRecordWhenProperInputExpectServiceInvocation() {
         // given
         MeasurementDto input = MeasurementDto.builder()
@@ -51,6 +53,7 @@ class AirQualityControllerTest {
     }
 
     @Test
+    @DisplayName("getStats3h when proper input expects measurement service invocation")
     void testGetStats3hWhenProperInputExpectServiceInvocation() {
         //given
         UUID cityId = UUID.randomUUID();

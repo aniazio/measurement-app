@@ -5,6 +5,7 @@ import org.example.demo.model.FullStats3h;
 import org.example.demo.model.MeasurementDto;
 import org.example.demo.service.MeasurementService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MediaType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,6 +43,7 @@ class AirQualityControllerIT {
     }
 
     @Test
+    @DisplayName("createNewMeasurementRecord when proper input expects 201")
     void testCreateNewMeasurementRecordWhenProperInputExpect201() throws Exception {
         MeasurementDto input = MeasurementDto.builder()
                 .cityId(UUID.randomUUID())
@@ -63,6 +65,7 @@ class AirQualityControllerIT {
     }
 
     @Test
+    @DisplayName("createNewMeasurementRecord when input doesn't pas validation expects 400")
     void testCreateNewMeasurementRecordWhenNotValidInputExpect400() throws Exception {
         MeasurementDto input = MeasurementDto.builder() //empty input
                 .build();
@@ -74,6 +77,7 @@ class AirQualityControllerIT {
     }
 
     @Test
+    @DisplayName("getStats3h when proper input expects 200")
     void testGetStats3hWhenProperInputExpect200() throws Exception {
         UUID cityId = UUID.randomUUID();
         UUID regionId = UUID.randomUUID();

@@ -8,6 +8,7 @@ import org.example.demo.model.MeasurementDto;
 import org.example.demo.repository.MeasurementRepository;
 import org.example.demo.repository.StatsRepository;
 import org.example.demo.service.RegionService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,6 +41,7 @@ class MeasurementServiceImplTest {
 
 
     @Test
+    @DisplayName("save when entity exists in db expects exception")
     void testSaveWhenEntityExistsInDbExpectsException() {
         //given
         MeasurementDto measurementDto = createMeasurementDto();
@@ -58,6 +60,7 @@ class MeasurementServiceImplTest {
     }
 
     @Test
+    @DisplayName("save when new entity expects success")
     void testSaveWhenNewEntityExpectsSuccess() {
         //given
         MeasurementDto measurementDto = createMeasurementDto();
@@ -84,6 +87,7 @@ class MeasurementServiceImplTest {
     }
 
     @Test
+    @DisplayName("get3hStats when invalid region expects exception")
     void testGet3hStatsWhenInvalidRegionExpectsException() {
         //given
         UUID cityId = UUID.randomUUID();
@@ -95,6 +99,7 @@ class MeasurementServiceImplTest {
     }
 
     @Test
+    @DisplayName("get3hStats when valid region expects success")
     void testGet3hStatsWhenValidRegionExpectsSuccess() {
         //given
         UUID cityId = UUID.randomUUID();

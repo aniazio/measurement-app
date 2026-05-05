@@ -5,6 +5,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.example.demo.exception.ExternalDependencyException;
 import org.example.demo.model.RegionDto;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MediaType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -35,7 +36,8 @@ class RegionServiceImplTest {
     }
 
     @Test
-    void testIsValidRegionForTheCityWhenSuccessResponseRegionValidExpectFalse() {
+    @DisplayName("isValidRegionForTheCity when success response region valid expects true")
+    void testIsValidRegionForTheCityWhenSuccessResponseRegionValidExpectTrue() {
         //given
         setUpWiremockSuccessResponse(cityId, RegionDto.builder().regionId(regionId).build());
         //when
@@ -45,7 +47,8 @@ class RegionServiceImplTest {
     }
 
     @Test
-    void testIsValidRegionForTheCityWhenSuccessResponseRegionNotValidExpectTrue() {
+    @DisplayName("isValidRegionForTheCity when success response region not valid expects false")
+    void testIsValidRegionForTheCityWhenSuccessResponseRegionNotValidExpectFalse() {
         //given
         setUpWiremockSuccessResponse(cityId, RegionDto.builder().regionId(UUID.randomUUID()).build());
         //when
@@ -55,6 +58,7 @@ class RegionServiceImplTest {
     }
 
     @Test
+    @DisplayName("isValidRegionForTheCity when error response expects exception")
     void testIsValidRegionForTheCityWhenErrorResponseExpectException() {
         //given
         setUpWiremockErrorResponse(cityId);
@@ -64,6 +68,7 @@ class RegionServiceImplTest {
     }
 
     @Test
+    @DisplayName("getRegion when successful response from external service expects region dto")
     void testGetRegionWhenSuccessfulResponseFromExternalServiceExpectRegionDto() {
         //given
         RegionDto regionDto = RegionDto.builder()
@@ -80,6 +85,7 @@ class RegionServiceImplTest {
     }
 
     @Test
+    @DisplayName("getRegion when error from external service expects empty dto")
     void testGetRegionWhenErrorFromExternalServiceExpectEmptyDto() {
         //given
         setUpWiremockErrorResponse(cityId);

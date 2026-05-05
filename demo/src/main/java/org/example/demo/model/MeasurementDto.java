@@ -36,7 +36,7 @@ public class MeasurementDto implements Serializable {
     @JsonProperty("NO2")
     private BigDecimal no2;
 
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @NotNull
     @PastOrPresent
     private Instant timestamp;

@@ -2,6 +2,7 @@ package org.example.demo.converter;
 
 import org.example.demo.entity.Measurement;
 import org.example.demo.model.MeasurementDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -16,6 +17,7 @@ class MeasurementConverterTest {
     private MeasurementConverter measurementConverter = Mappers.getMapper(MeasurementConverter.class);
 
     @Test
+    @DisplayName("convertToMeasurement when proper input expects measurement entity constructed")
     void testConvertToMeasurementWhenProperInputExpectMeasurement() {
         //given
         MeasurementDto input = MeasurementDto.builder()
@@ -47,6 +49,7 @@ class MeasurementConverterTest {
     }
 
     @Test
+    @DisplayName("convertToMeasurementDto when proper input expects measurement dto constructed")
     void testConvertToMeasurementDtoWhenProperInputExpectMeasurementDto() {
         //given
         Measurement input = Measurement.builder()

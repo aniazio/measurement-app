@@ -18,7 +18,7 @@ public class MockRegionService implements RegionService {
 
     @Override
     public boolean isValidRegionForTheCity(UUID regionId, UUID cityId) {
-        return true;
+        return regionId.equals(cityId);
     }
 
     @Override
