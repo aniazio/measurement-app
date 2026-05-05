@@ -53,6 +53,19 @@ public class MonthSummaryProcessor {
         absoluteDirectory = generateDirectory();
     }
 
+    private String generateDirectory() {
+        File fileDirectory = new File(directory);
+
+        fileDirectory.mkdirs();
+
+        // Verify the directory exists after creation attempt
+        if (!fileDirectory.exists() || !fileDirectory.isDirectory()) {
+            log.error("Failed to create the directory: {}", fileDirectory.getAbsolutePath());
+            throw new StatsMonthlyReportGenerationException();
+        }
+        return fileDirectory.getAbsolutePath();
+    }
+
     /**
      * Generates monthly report with worst cities based on NO2 levels.
      * Job runs on the first day of the month. It analyzes the last month's data and generates a report.
@@ -81,19 +94,6 @@ public class MonthSummaryProcessor {
                 .toList();
         String fileName = String.format(FILE_NAME_PATTERN, DateTimeFormatter.ofPattern(DATE_FORMAT).format(Instant.now()));
         generateReportFile(absoluteDirectory, fileName, reportRows);
-    }
-
-    private String generateDirectory() {
-        File fileDirectory = new File(directory);
-
-        fileDirectory.mkdirs();
-
-        // Verify the directory exists after creation attempt
-        if (!fileDirectory.exists() || !fileDirectory.isDirectory()) {
-            log.error("Failed to create the directory: {}", fileDirectory.getAbsolutePath());
-            throw new StatsMonthlyReportGenerationException();
-        }
-        return fileDirectory.getAbsolutePath();
     }
 
     private void generateReportFile(String fileDirectory, String fileName, List<ReportRow> reportRows) {
