@@ -40,7 +40,7 @@ public class MeasurementServiceImpl implements MeasurementService {
 
     @Override
     public FullStats3h get3hStats(UUID regionId, UUID cityId) {
-        if (!regionService.isValidRegion(regionId, cityId)) {
+        if (!regionService.isValidRegionForTheCity(regionId, cityId)) {
             throw new InvalidRegionException(regionId, cityId);
         }
         return statsRepository.get3hStats(cityId);

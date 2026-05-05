@@ -16,7 +16,7 @@ public interface RegionService {
      * @param cityId   id of city
      * @return true, if the city is assigned to the region (valid region for that city)
      */
-    boolean isValidRegion(UUID regionId, UUID cityId);
+    boolean isValidRegionForTheCity(UUID regionId, UUID cityId);
 
     /**
      * Get region for the city.

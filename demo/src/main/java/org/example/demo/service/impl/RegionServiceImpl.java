@@ -26,7 +26,7 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     @Cacheable(value = "region-city-matching", key = "#regionId + ' ' + #cityId")
-    public boolean isValidRegion(UUID regionId, UUID cityId) {
+    public boolean isValidRegionForTheCity(UUID regionId, UUID cityId) {
         return Boolean.TRUE.equals(getRegionDtoFlux(cityId)
                 .map(regionDto -> regionDto.getRegionId().equals(regionId))
                 .doOnNext(regionDto -> log.info("RegionDto received from Region service: {}", regionDto))

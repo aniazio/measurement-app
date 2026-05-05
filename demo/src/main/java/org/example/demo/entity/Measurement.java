@@ -57,6 +57,10 @@ public class Measurement {
     }
 
     public MeasurementId getId() {
-        return new MeasurementId(sensorId, cityId, measurementTimestamp);
+        return MeasurementId.builder()
+                .sensorId(sensorId)
+                .cityId(cityId)
+                .measurementTimestamp(measurementTimestamp)
+                .build();
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -53,7 +53,7 @@ public class TestingController {
     @Operation(summary = "Generate summary report for the month", description = "Generate summary report for the month - testing implementation to manually trigger month summary report generation")
     @ApiResponse(responseCode = "200", description = "Month summary report generation triggered")
     @GetMapping("/month-summary")
-    public ResponseEntity<String> generateMonthlySummary(Instant dayOfTheMonth) {
+    public ResponseEntity<String> generateMonthlySummary(LocalDateTime dayOfTheMonth) {
         monthSummaryProcessor.produceMonthSummaryReport(dayOfTheMonth);
         return ResponseEntity.ok("Month summary report generation triggered");
     }

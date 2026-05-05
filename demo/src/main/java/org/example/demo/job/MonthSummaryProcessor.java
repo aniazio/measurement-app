@@ -59,19 +59,17 @@ public class MonthSummaryProcessor {
      */
     @Scheduled(cron = "0 0 2 1 * *")
     public void produceMonthSummaryReport() {
-        produceMonthSummaryReport(null);
+        LocalDateTime dayOfTheMonth = LocalDateTime.now().minus(Duration.ofDays(1));
+        produceMonthSummaryReport(dayOfTheMonth);
     }
 
     /**
      * Generates monthly report with worst cities based on NO2 levels.
      *
-     * @param dayOfTheMonth the day of the month (optional parameter, in case when report should be triggered for other day)
+     * @param dayOfTheMonth the day of the month for which the report should be generated
      */
-    public void produceMonthSummaryReport(Instant dayOfTheMonth) {
-        LocalDateTime dayInTheAnalyzedMonth = dayOfTheMonth == null
-                ? LocalDateTime.now().minus(Duration.ofDays(1))
-                : LocalDateTime.from(dayOfTheMonth);
-        Instant firstDayOfTheMonth = LocalDateTime.of(dayInTheAnalyzedMonth.getYear(), dayInTheAnalyzedMonth.getMonth(), 1, 0, 0)
+    public void produceMonthSummaryReport(LocalDateTime dayOfTheMonth) {
+        Instant firstDayOfTheMonth = LocalDateTime.of(dayOfTheMonth.getYear(), dayOfTheMonth.getMonth(), 1, 0, 0)
                 .toInstant(ZoneOffset.UTC);
         List<Stats> lastMonthTop10NoUsage = statsRepository.getLastMonthTop10NOUsage(firstDayOfTheMonth);
         List<ReportRow> reportRows = lastMonthTop10NoUsage.stream()
