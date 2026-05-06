@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS measurement
     measurement_timestamp timestamp,
     no2                   numeric(38,2),
     co                    numeric(38,2),
-    pm10                  numeric(38,2)
+    pm10                  numeric(38,2),
+    PRIMARY KEY (city_id, measurement_timestamp, sensor_id)
     );
 
 INSERT INTO measurement(sensor_id, city_id, measurement_timestamp, no2, co, pm10)
