@@ -39,16 +39,16 @@ public interface StatsRepository extends Repository<Measurement, MeasurementId> 
     @Query("""
             SELECT new org.example.demo.model.Stats(m.cityId, avg(m.no2))
             FROM Measurement m
-            WHERE m.measurementTimestamp >= date_trunc('month', :firstDayOfLastMonth)
-            AND m.measurementTimestamp < date_trunc('month', :firstDayOfLastMonth + 1 month)
+            WHERE m.measurementTimestamp >= date_trunc('month', cast(:firstDayOfLastMonth as timestamp))
+            AND m.measurementTimestamp < date_trunc('month', cast(:firstDayOfLastMonth as timestamp) + 1 month)
             AND exists(select 1 from Measurement inm
                         WHERE inm.cityId = m.cityId
-                                    AND inm.measurementTimestamp >= date_trunc('day', :firstDayOfLastMonth)
-                                    AND inm.measurementTimestamp < date_trunc('day', :firstDayOfLastMonth + 1 day))
+                                    AND inm.measurementTimestamp >= date_trunc('day', cast(:firstDayOfLastMonth as timestamp))
+                                    AND inm.measurementTimestamp < date_trunc('day', cast(:firstDayOfLastMonth as timestamp) + 1 day))
             AND exists(select 1 from Measurement inm
                         WHERE inm.cityId = m.cityId
-                                    AND inm.measurementTimestamp >= date_trunc('month', (:firstDayOfLastMonth + 1 month - 1 day))
-                                    AND inm.measurementTimestamp < date_trunc('month', :firstDayOfLastMonth + 1 month))
+                                    AND inm.measurementTimestamp >= date_trunc('day', (cast(:firstDayOfLastMonth as timestamp) + 1 month - 1 day))
+                                    AND inm.measurementTimestamp < date_trunc('day', cast(:firstDayOfLastMonth as timestamp) + 1 month))
             GROUP BY m.cityId
             ORDER BY avg(m.no2) DESC
             LIMIT 10
