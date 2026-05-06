@@ -65,7 +65,7 @@ class MonthSummaryProcessorTest {
     @DisplayName("produceMonthSummaryReport when no input date and no data in db expects produce empty report for last month")
     void testProduceMonthSummaryReportWhenNoDateNoDataExpectProduceEmptyReportForLastMonth() throws IOException {
         //given
-        LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1);
+        LocalDateTime lastMonth = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).minusMonths(1);
         Instant firstDayLastMonth = LocalDateTime.of(lastMonth.getYear(), lastMonth.getMonth(), 1, 0, 0)
                 .toInstant(ZoneOffset.UTC);
         given(statsRepository.getLastMonthTop10NOUsage(firstDayLastMonth))
@@ -83,7 +83,7 @@ class MonthSummaryProcessorTest {
     @DisplayName("produceMonthSummaryReport when no input date and some data in db expects produce report for last month")
     void testProduceMonthSummaryReportWhenNoDateSomeStatsExpectProduceReportForLastMonth() throws IOException {
         //given
-        LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1);
+        LocalDateTime lastMonth = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).minusMonths(1);
         Instant firstDayLastMonth = LocalDateTime.of(lastMonth.getYear(), lastMonth.getMonth(), 1, 0, 0)
                 .toInstant(ZoneOffset.UTC);
         Stats stat1 = createStats(BigDecimal.valueOf(12.3));

@@ -18,7 +18,7 @@ docker-compose up -d
 To start the project use following command:
 
 ```bash
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.profiles=testing
 ```
 
 Profiles:
@@ -27,10 +27,12 @@ Profiles:
 - 'local' - for local development (without integration with external service)
 - 'default' - with integration with external service. Without additional endpoints
 
+You can easily use app with swagger: http://localhost:8080/swagger-ui/index.html#
+
 ## Design decisions
 
 - PostgreSQL database was used for storing data. Because of limited access patterns, PK was optimised for existing
-  queries (PK = city_id, measurement_timestamp, sensor_id). It allows to proceed without additional index on db.
+  queries (PK = city_id, measurement_timestamp, sensor_id). It allows to proceed without additional index on db. Db analyze: "Index Scan using pk_measurement on public.measurement m"
 - Region data is not stored in the database, because this app is not responsible for maintaining that information.
   Instead, we fetch region data whenever needed, using approach similar to microservices architecture. Caching was
   introduced to reduce number of calls to external service during API usage.

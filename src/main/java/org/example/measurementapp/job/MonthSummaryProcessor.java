@@ -71,7 +71,7 @@ public class MonthSummaryProcessor {
      */
     @Scheduled(cron = "0 0 2 1 * *")
     public void produceMonthSummaryReport() {
-        LocalDateTime dayOfTheMonth = LocalDateTime.now().minusMonths(1);
+        LocalDateTime dayOfTheMonth = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).minusMonths(1);
         produceMonthSummaryReport(dayOfTheMonth);
     }
 
