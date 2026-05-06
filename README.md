@@ -38,3 +38,5 @@ You can easily use app with swagger: http://localhost:8080/swagger-ui/index.html
   introduced to reduce number of calls to external service during API usage.
 - MapStruct for simple mapping between dto and entity. Dto for measurements introduced to decouple repository logic with
   service layer.
+- Liquibase script is used for creating a table. No additional script is needed when using docker. Just in case create 
+  table statement and test-data script in postgres syntax is available in src/test/resources/test-data-postres.sql for manual testing.
