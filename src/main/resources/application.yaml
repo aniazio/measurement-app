@@ -13,8 +13,11 @@ spring:
     cache-names: region-city-matching
     type: caffeine
     caffeine:
-      spec: maximumSize=100,expireAfterAccess=10m
+      spec: maximumSize=500,expireAfterAccess=10m
 
 external-api:
   region:
-    url:
+    url: https://api.europeancitiesdictionary.info/cities
+
+month-report-generator:
+  directory: month_summary_report

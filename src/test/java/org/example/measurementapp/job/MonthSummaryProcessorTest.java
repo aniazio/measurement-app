@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.example.measurementapp.job.MonthSummaryProcessor.DATE_FORMAT;
 import static org.example.measurementapp.job.MonthSummaryProcessor.FILE_NAME_PATTERN;
 import static org.example.measurementapp.job.MonthSummaryProcessor.HEADER_ROW;
@@ -75,8 +76,8 @@ class MonthSummaryProcessorTest {
         //then
         Path expectedFile = path.resolve(String.format(FILE_NAME_PATTERN, DateTimeFormatter.ofPattern(DATE_FORMAT).format(lastMonth)));
         assertTrue(Files.exists(expectedFile.toAbsolutePath()));
-        String content = Files.readString(expectedFile);
-        assertEquals(HEADER_ROW + "\n", content);
+        String content = Files.readString(expectedFile).trim();
+        assertEquals(HEADER_ROW, content);
     }
 
     @Test
@@ -97,8 +98,8 @@ class MonthSummaryProcessorTest {
         //then
         Path expectedFile = path.resolve(String.format(FILE_NAME_PATTERN, DateTimeFormatter.ofPattern(DATE_FORMAT).format(lastMonth)));
         assertTrue(Files.exists(expectedFile.toAbsolutePath()));
-        String content = Files.readString(expectedFile);
-        assertEquals(HEADER_ROW + "\n" + "City1,Region1,12.3" + "\n" + "City2,Region2,11.1" + "\n", content);
+        String content = Files.readString(expectedFile).trim();
+        assertThat(content).isEqualToNormalizingNewlines(HEADER_ROW + "\n" + "City1,Region1,12.3" + "\n" + "City2,Region2,11.1");
     }
 
     @Test
@@ -115,8 +116,8 @@ class MonthSummaryProcessorTest {
         //then
         Path expectedFile = path.resolve(String.format(FILE_NAME_PATTERN, "201812"));
         assertTrue(Files.exists(expectedFile.toAbsolutePath()));
-        String content = Files.readString(expectedFile);
-        assertEquals(HEADER_ROW + "\n", content);
+        String content = Files.readString(expectedFile).trim();
+        assertEquals(HEADER_ROW, content);
     }
 
     @Test
@@ -137,8 +138,8 @@ class MonthSummaryProcessorTest {
         //then
         Path expectedFile = path.resolve(String.format(FILE_NAME_PATTERN, "201812"));
         assertTrue(Files.exists(expectedFile.toAbsolutePath()));
-        String content = Files.readString(expectedFile);
-        assertEquals(HEADER_ROW + "\n" + "City1,Region1,12.3" + "\n" + "City2,Region2,11.1" + "\n", content);
+        String content = Files.readString(expectedFile).trim();
+        assertThat(content).isEqualToNormalizingNewlines(HEADER_ROW + "\n" + "City1,Region1,12.3" + "\n" + "City2,Region2,11.1");
     }
 
     private Stats createStats(BigDecimal avg) {

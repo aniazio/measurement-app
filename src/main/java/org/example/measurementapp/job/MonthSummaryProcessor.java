@@ -37,8 +37,8 @@ public class MonthSummaryProcessor {
     private final RegionService regionService;
 
     static final String HEADER_ROW = "CITY,REGION,NO2";
-    @Value("${month-summary-generator.directory:month_summary_reports}")
-    static String directory = "month_summary_reports";
+    @Value("${month-report-generator.directory:month_summary_reports}")
+    String directory;
     static final String FILE_NAME_PATTERN = "WORST_CITIES_NO2_%s.csv";
     static final String DATE_FORMAT = "YYYYMM";
 
