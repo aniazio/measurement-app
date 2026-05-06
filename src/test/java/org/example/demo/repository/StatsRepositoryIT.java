@@ -5,14 +5,11 @@ import org.example.demo.model.Stats;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -21,17 +18,9 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(classes = {
-        StatsRepository.class
-})
-@Testcontainers
+@DataJpaTest
+@Sql("/test-data.sql")
 class StatsRepositoryIT {
-
-    @Container
-    @ServiceConnection
-    private static PostgreSQLContainer postgres = (PostgreSQLContainer) new PostgreSQLContainer(DockerImageName.parse("postgres:16.2")
-            .asCompatibleSubstituteFor("postgres"))
-            .withInitScript("test-data.sql");
 
     @Autowired
     private StatsRepository statsRepository;
@@ -41,15 +30,15 @@ class StatsRepositoryIT {
     void testGet3hStatsWhenTestDataExpectsCorrectlyCalculatedStats() {
         // given
         FullStats3h expectedResult = FullStats3h.builder()
-                .avgPm10(BigDecimal.valueOf(20))
-                .maxPm10(BigDecimal.valueOf(30))
-                .minPm10(BigDecimal.valueOf(10))
-                .avgNo2(BigDecimal.valueOf(2))
-                .maxNo2(BigDecimal.valueOf(3))
-                .minNo2(BigDecimal.valueOf(1))
-                .avgCo(BigDecimal.valueOf(22))
-                .maxCo(BigDecimal.valueOf(33))
-                .minCo(BigDecimal.valueOf(11))
+                .avgPm10(BigDecimal.valueOf(20).setScale(2, RoundingMode.HALF_UP))
+                .maxPm10(BigDecimal.valueOf(30).setScale(2, RoundingMode.HALF_UP))
+                .minPm10(BigDecimal.valueOf(10).setScale(2, RoundingMode.HALF_UP))
+                .avgNo2(BigDecimal.valueOf(2).setScale(2, RoundingMode.HALF_UP))
+                .maxNo2(BigDecimal.valueOf(3).setScale(2, RoundingMode.HALF_UP))
+                .minNo2(BigDecimal.valueOf(1).setScale(2, RoundingMode.HALF_UP))
+                .avgCo(BigDecimal.valueOf(22).setScale(2, RoundingMode.HALF_UP))
+                .maxCo(BigDecimal.valueOf(33).setScale(2, RoundingMode.HALF_UP))
+                .minCo(BigDecimal.valueOf(11).setScale(2, RoundingMode.HALF_UP))
                 .build();
         // when
         FullStats3h result = statsRepository.get3hStats(UUID.fromString("00000000-0000-0000-0000-000000000014"));
@@ -61,9 +50,12 @@ class StatsRepositoryIT {
     @DisplayName("getLastMonthTop10NOUsage when testData in db expects correctly calculated stats")
     void testGetLastMonthTop10NOUsageWhenTestDataInDbExpectCorrectlyCalculatedStats() {
         // given
-        List<Stats> expectedResult = IntStream.range(1, 10)
-                .map(i -> 10 - i)
-                .mapToObj(i -> Stats.builder().cityId(new UUID(0, i)).average(BigDecimal.valueOf(31 + i / 10)).build())
+        List<Stats> expectedResult = IntStream.range(1, 11)
+                .map(i -> 11 - i)
+                .mapToObj(i -> Stats.builder()
+                        .cityId(new UUID(0, i))
+                        .average(BigDecimal.valueOf((31 + ((double) i) / 10)/3).setScale(2, RoundingMode.HALF_UP))
+                        .build())
                 .toList();
         //when
         List<Stats> result = statsRepository.getLastMonthTop10NOUsage(LocalDateTime.of(2024, 12, 1, 12, 0).toInstant(ZoneOffset.UTC));

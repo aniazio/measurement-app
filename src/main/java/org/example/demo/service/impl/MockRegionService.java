@@ -12,7 +12,7 @@ import java.util.UUID;
  * Mock implementation of the RegionService interface.
  */
 @Component
-@Profile({"local", "test"})
+@Profile({"local", "testing"})
 @Qualifier("mock")
 public class MockRegionService implements RegionService {
 

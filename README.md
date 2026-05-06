@@ -23,7 +23,7 @@ mvn spring-boot:run
 
 Profiles:
 
-- 'test' - for testing features. It provides new controller with additional endpoints
+- 'testing' - for testing features. It provides new controller with additional endpoints
 - 'local' - for local development (without integration with external service)
 - 'default' - with integration with external service. Without additional endpoints
 
