@@ -53,7 +53,7 @@ class MonthSummaryProcessorTest {
     @Test
     @DisplayName("init when triggered expects prepare reports directory")
     void testInitWhenTriggeredExpectPrepareReportsDirectory(@TempDir Path tempDir) {
-        ReflectionTestUtils.setField(monthSummaryProcessor, "absoluteDirectory", tempDir.toString());
+        ReflectionTestUtils.setField(monthSummaryProcessor, "directory", tempDir.toString());
         Path path = tempDir.getParent();
 
         monthSummaryProcessor.init();
